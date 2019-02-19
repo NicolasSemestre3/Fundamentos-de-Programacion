@@ -36,7 +36,7 @@ namespace BlackJack
                 {
                     //Empezamos a preguntar si quiere seguir jugando
                     Console.WriteLine("Ahora estamos asi: " + totalMano);
-                    Console.WriteLine("¿Deseas quedarte o seguir? gallina");
+                    Console.WriteLine("¿Deseas seguir? gallina");
                     string continuar = Console.ReadLine();
 
                     //Verificamos la continuidad
@@ -48,7 +48,7 @@ namespace BlackJack
                         string otraCarta = Console.ReadLine();
 
                         //Asignamos el while
-                        while ( otraCarta == "si")
+                        while ( otraCarta == "si" && totalMano < 21)
                         {
                             //Asignamos otra carta
                             cartaAdicional = cartaAzar.Next(1, 12);
