@@ -64,12 +64,19 @@ namespace BlackJack
                     max = total;
                     indiceMax = jugadores[i];
                 }
+                
                 Console.WriteLine("Tu puntaje fue de: " + total);
 
 
             }
+            if (indice == 1) 
+            {
+                Console.WriteLine("No hay Ganador");
+            }
+            else
+            {
             Console.WriteLine("El Ganador es el jugador " + indiceMax + " Con " + max + "Puntos");
-            
+            }
 
             
             Console.ReadLine();
