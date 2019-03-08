@@ -10,291 +10,71 @@ namespace BlackJack
     {
         static void Main(string[] args)
         {
-            //Iniciamos el primer ingreso
-            Console.WriteLine("Saludos soy Failsafe, y estoy aqui para jugar contigo, ¿deseas jugar un poco de Blackjack?, de igual forma te quitaré dinero.");
-            string iniciarJuego = Console.ReadLine();
-
-            while (iniciarJuego == "si")
+            Random aleatorio = new Random();
+            int carta1 = 0, carta2 = 0, cartaRobada = 0;
+            int total = 0, max = 0, indiceMax = 0;
+            Console.WriteLine("ingrese el número de jugadores:");
+            int n = int.Parse(Console.ReadLine());
+            int[] jugadores = new int[n];
+            int[] puntajes = new int[n];
+            string Robar = "";
+            
+            for (int i = 0; i<n; i++)
             {
-                //Organizamos las posibles variables
-                Random cartaAzar = new Random();
-                Random manoEnemiga = new Random();
-                int cartaAzar1 = 0, cartaAzar2 = 0, totalMano = 0, cartaAdicional = 0, totalManoEnemiga = 0;
-
-                //Generamos la mano
-                cartaAzar1 = cartaAzar.Next(1, 12);
-                Console.WriteLine("Tu primera carta fue: " + cartaAzar1);
-
-                cartaAzar2 = cartaAzar.Next(1, 12);
-                Console.WriteLine("Tu segunda carta fue: " + cartaAzar2);
-
-                //Delimitamos el inicio
-                totalMano = cartaAzar1 + cartaAzar2;
-
-                //Colocamos la situación inicial
-                if (totalMano < 21)
+                jugadores[i] = i + 1;
+                Console.WriteLine("Turno del jugador " + jugadores[i]);
+                carta1 = aleatorio.Next(1, 11);
+                carta2 = aleatorio.Next(1, 11);
+                Console.WriteLine("Tu primera carta: " + carta1);
+                Console.WriteLine("Tu segunda carta: " + carta2);
+                total = carta1 + carta2;
+                Console.WriteLine("Tus puntos: " + total);
+                Console.WriteLine("Desea Robar mas cartas? s/n");
+                Robar = Console.ReadLine();
+                while (Robar == "s" && total < 21)
                 {
-                    //Empezamos a preguntar si quiere seguir jugando
-                    Console.WriteLine("Ahora estamos asi: " + totalMano);
-                    Console.WriteLine("¿Deseas seguir? gallina");
-                    string continuar = Console.ReadLine();
-
-                    //Verificamos la continuidad
-                    if ( continuar == "si")
+                    cartaRobada = aleatorio.Next(1, 11);
+                    total = total + cartaRobada;
+                    if (total >= 22)
                     {
-                        //Preguntamos si desea otra carta
-                        Console.WriteLine("Esa es la actitud capitan, otro que cae");
-                        Console.WriteLine("¿Quieres otra carta?");
-                        string otraCarta = Console.ReadLine();
-
-                        //Asignamos el while
-                        while ( otraCarta == "si" && totalMano < 21)
-                        {
-                            //Asignamos otra carta
-                            cartaAdicional = cartaAzar.Next(1, 12);
-                            Console.WriteLine("Tu nueva carta es: " + cartaAdicional);
-
-                            //Sumamos mas
-                            totalMano += cartaAdicional;
-
-                            //Reintegramos el total
-                            Console.WriteLine("Tu nueva mano es: " + totalMano);
-
-                            if ( totalMano < 21)
-                            {
-                                //confirmamos la situacion
-                                Console.WriteLine("¿Quieres otra carta?");
-                                otraCarta = Console.ReadLine();
-                            }
-                            else if (totalMano == 21)
-                            {
-
-                                //Mensaje de victoria 
-                                Console.Write("Increible capitan sacaste: " + totalMano);
-
-                                //Generamos posible empate
-                                totalManoEnemiga = manoEnemiga.Next(1, 22);
-
-                                if (totalMano == totalManoEnemiga)
-                                {
-                                    //Introducimos la situacion
-                                    Console.WriteLine("Vaya, vamos a desempatar esto, dado que tu contrincante saco: " + totalManoEnemiga);
-                                    Console.WriteLine("Entonces vamos a jugar denuevo, con una sola carta, quien saque la mayor");
-
-                                    //Formulamos los radom
-                                    cartaAzar1 = cartaAzar.Next(1, 12);
-                                    Console.WriteLine("Okey tu carta es: " + cartaAzar1);
-
-                                    cartaAzar2 = cartaAzar.Next(1, 12);
-                                    Console.WriteLine("Tu adversario tiene: " + cartaAzar2);
-
-                                    //Acomodamos la situacion
-                                    if (cartaAzar1 > cartaAzar2)
-                                    {
-                                        Console.WriteLine("Increible capitan sacaste: " + cartaAzar1);
-                                        Console.WriteLine("Vaya es muy poco probable que esto ocurra, que maldita potra la tuya.");
-                                        Console.WriteLine("Muy demalas tu adversario, que jodon eres me hiciste perder una apuesta >:C");
-
-                                        //Preguntamos si desea continuar
-                                        Console.WriteLine("¿Quieres volver a intentar?.");
-                                        iniciarJuego = Console.ReadLine();
-                                    }
-                                    else if (cartaAzar1 == cartaAzar2)
-                                    {
-                                        Console.WriteLine("Oh... , que hijueputa joda con ustedes dos, no los soporto, repitan está monda mejor");
-
-                                        //Preguntamos si desea continuar
-                                        Console.WriteLine("¿Quieres volver a intentar?.");
-                                        iniciarJuego = Console.ReadLine();
-                                    }
-                                    else
-                                    {
-                                        //Mensaje de perdida
-                                        Console.WriteLine("Y mejor aun tu adversario tiene: " + cartaAzar2);
-                                        Console.WriteLine("Vaya, y yo que habia apostado... bueno, almenos yo si me llevo dinero hoy :·3.");
-
-                                        //Preguntamos si desea continuar
-                                        Console.WriteLine("¿Quieres volver a intentar?.");
-                                        iniciarJuego = Console.ReadLine();
-                                    }
-
-                                }
-                                else
-                                {
-                                    //Terminamo todo
-                                    Console.WriteLine("Y mejor aun tu adversario tiene: " + totalManoEnemiga);
-                                    Console.WriteLine("Muy demalas tu adversario, que jodon eres me hiciste perder una apuesta >:C");
-                                    Console.WriteLine("¿Quieres volver a intentar?.");
-                                    iniciarJuego = Console.ReadLine();
-                                }
-
-                            }
-                            else
-                            {
-
-                                //Mensaje de perdida
-                                Console.WriteLine("Oh.... sacaste: " + totalMano);
-                                Console.WriteLine("Vaya, y yo que habia apostado... bueno, almenos yo si me llevo dinero hoy :·3.");
-
-                                //Preguntamos si desea continuar
-                                Console.WriteLine("¿Quieres volver a intentar?.");
-                                iniciarJuego = Console.ReadLine();
-
-                            }
-
-                        }
-
+                        Console.WriteLine("You Lose! La suerte no está de tu lado");
+                        Console.WriteLine("Has robado un " + cartaRobada + " Pero te pasaste de 21");
+                        Console.WriteLine("perdiste con " + carta1 + " " + carta2 + " " + cartaRobada + " para un total de " + total);
+                        total = 0;
+                        break;
                     }
+                    else if (total == 21)
+                    {
+                        Console.WriteLine("Congratulations, Has robado un " + cartaRobada + " Para un limpio BlackJack");
+                        Console.WriteLine("Has Ganado con " + carta1 + " " + carta2 + " " + cartaRobada);
+                        break;
+                    }
+
                     else
                     {
-
-                        //Mensaje de victoria 
-                        Console.WriteLine("Increible capitan sacaste: " + totalMano);
-
-                        //Generamos posible empate
-                        totalManoEnemiga = manoEnemiga.Next(1, 22);
-
-                        if (totalMano == totalManoEnemiga)
-                        {
-                            //Introducimos la situacion
-                            Console.WriteLine("Vaya, vamos a desempatar esto, dado que tu contrincante saco: " + totalManoEnemiga);
-                            Console.WriteLine("Entonces vamos a jugar denuevo, con una sola carta, quien saque la mayor");
-
-                            //Formulamos los radom
-                            cartaAzar1 = cartaAzar.Next(1, 12);
-                            Console.WriteLine("Okey tu carta es: " + cartaAzar1);
-
-                            cartaAzar2 = cartaAzar.Next(1, 12);
-                            Console.WriteLine("Tu adversario tiene: " + cartaAzar2);
-
-                            //Acomodamos la situacion
-                            if (cartaAzar1 > cartaAzar2)
-                            {
-                                Console.Write("Increible capitan sacaste: " + cartaAzar1);
-                                Console.WriteLine("Vaya es muy poco probable que esto ocurra, que maldita potra la tuya.");
-                                Console.WriteLine("Muy demalas tu adversario, que jodon eres me hiciste perder una apuesta >:C");
-
-                                //Preguntamos si desea continuar
-                                Console.WriteLine("¿Quieres volver a intentar?.");
-                                iniciarJuego = Console.ReadLine();
-                            }
-                            else if (cartaAzar1 == cartaAzar2)
-                            {
-                                Console.WriteLine("Oh... , que hijueputa joda con ustedes dos, no los soporto, repitan está monda mejor");
-
-                                //Preguntamos si desea continuar
-                                Console.WriteLine("¿Quieres volver a intentar?.");
-                                iniciarJuego = Console.ReadLine();
-                            }
-                            else
-                            {
-                                //Mensaje de perdida
-                                Console.WriteLine("Y mejor aun tu adversario tiene: " + cartaAzar2);
-                                Console.WriteLine("Vaya, y yo que habia apostado... bueno, almenos yo si me llevo dinero hoy :·3.");
-
-                                //Preguntamos si desea continuar
-                                Console.WriteLine("¿Quieres volver a intentar?.");
-                                iniciarJuego = Console.ReadLine();
-                            }
-
-                        }
-                        else if ( totalMano < totalManoEnemiga)
-                        {
-                            //Mensaje de perdida
-                            Console.WriteLine("Y mejor aun tu adversario tiene: " + totalManoEnemiga);
-                            Console.WriteLine("Vaya, y yo que habia apostado... bueno, almenos yo si me llevo dinero hoy :·3.");
-
-                            //Preguntamos si desea continuar
-                            Console.WriteLine("¿Quieres volver a intentar?.");
-                            iniciarJuego = Console.ReadLine();
-                        }
-                        else
-                        {
-                            //Terminamo todo
-                            Console.WriteLine("Y mejor aun tu adversario tiene: " + totalManoEnemiga);
-                            Console.WriteLine("Muy demalas tu adversario, que jodon eres me hiciste perder una apuesta >:C");
-                            Console.WriteLine("¿Quieres volver a intentar?.");
-                            iniciarJuego = Console.ReadLine();
-                        }
-
+                        Console.WriteLine("Acabas de robar un " + cartaRobada);
+                        Console.WriteLine("posees: " + carta1 + " " + carta2 + " " + cartaRobada + " para un total de " + total);
+                        Console.WriteLine("Deseas Robar mas cartas?");
+                        Robar = Console.ReadLine();
                     }
                 }
-                else if(totalMano == 21)
+                puntajes[i] = total;
+                if (total > max)
                 {
-                    //Mensaje de victoria 
-                    Console.WriteLine("Increible capitan sacaste: " + totalMano);
-                    Console.WriteLine("Vaya es muy poco probable que esto ocurra, que maldita potra la tuya.");
-
-                    //Generamos posible empate
-                    totalManoEnemiga = manoEnemiga.Next(1, 22);
-
-                    if (totalMano == totalManoEnemiga)
-                    {
-                        //Introducimos la situacion
-                        Console.WriteLine("Vaya, vamos a desempatar esto, dado que tu contrincante saco: " + totalManoEnemiga);
-                        Console.WriteLine("Entonces vamos a jugar denuevo, con una sola carta, quien saque la mayor");
-
-                        //Formulamos los radom
-                        cartaAzar1 = cartaAzar.Next(1, 12);
-                        Console.WriteLine("Okey tu carta es: " + cartaAzar1);
-
-                        cartaAzar2 = cartaAzar.Next(1, 12);
-                        Console.WriteLine("Tu adversario tiene: " + cartaAzar2);
-
-                        //Acomodamos la situacion
-                        if (cartaAzar1 > cartaAzar2)
-                        {
-                            Console.Write("Increible capitan sacaste: " + cartaAzar1);
-                            Console.WriteLine("Vaya es muy poco probable que esto ocurra, que maldita potra la tuya.");
-                            Console.WriteLine("Muy demalas tu adversario, que jodon eres me hiciste perder una apuesta >:C");
-
-                            //Preguntamos si desea continuar
-                            Console.WriteLine("¿Quieres volver a intentar?.");
-                            iniciarJuego = Console.ReadLine();
-                        }
-                        else if (cartaAzar1 == cartaAzar2)
-                        {
-                            Console.WriteLine("Oh... , que hijueputa joda con ustedes dos, no los soporto, repitan está monda mejor");
-
-                            //Preguntamos si desea continuar
-                            Console.WriteLine("¿Quieres volver a intentar?.");
-                            iniciarJuego = Console.ReadLine();
-                        }
-                        else
-                        {
-                            //Mensaje de perdida
-                            Console.WriteLine("Y mejor aun tu adversario tiene: " + cartaAzar2);
-                            Console.WriteLine("Vaya, y yo que habia apostado... bueno, almenos yo si me llevo dinero hoy :·3.");
-
-                            //Preguntamos si desea continuar
-                            Console.WriteLine("¿Quieres volver a intentar?.");
-                            iniciarJuego = Console.ReadLine();
-                        }
-                        
-                    }
-                    else
-                    {
-                        //Terminamo todo
-                        Console.WriteLine("Y mejor aun tu adversario tiene: " + totalManoEnemiga);
-                        Console.WriteLine("Muy demalas tu adversario, que jodon eres me hiciste perder una apuesta >:C");
-                        Console.WriteLine("¿Quieres volver a intentar?.");
-                        iniciarJuego = Console.ReadLine();
-                    }
-
+                    max = total;
+                    indiceMax = jugadores[i];
                 }
-                else
-                {
-                    //Mensaje de perdida
-                    Console.WriteLine("Oh.... sacaste: " + totalMano);
-                    Console.WriteLine("Vaya, y yo que habia apostado... bueno, almenos yo si me llevo dinero hoy :·3.");
+                Console.WriteLine("Tu puntaje fue de: " + total);
 
-                    //Preguntamos si desea continuar
-                    Console.WriteLine("¿Quieres volver a intentar?.");
-                    iniciarJuego = Console.ReadLine();
-                }
 
             }
-                Console.WriteLine("Carai, no esperaba esto de ti capitan... , que niña de tu parte, ve a que tu mami te consuele");
+            Console.WriteLine("El Ganador es el jugador " + indiceMax + " Con " + max + "Puntos");
+            
+
+            
+            Console.ReadLine();
+            
+
         }
     }
 }
